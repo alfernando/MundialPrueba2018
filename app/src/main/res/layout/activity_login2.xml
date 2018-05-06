@@ -53,9 +53,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="121dp"
-        app:cardBackgroundColor="@color/colorAccent"
+        app:cardBackgroundColor="@android:color/holo_blue_dark"
         app:cardCornerRadius="25dp"
-        app:cardElevation="10dp" >
+        app:cardElevation="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
