@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_rojo"
+    tools:context=".Login.loginActivity">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="181dp"
+        android:layout_height="137dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="84dp"
+        android:src="@drawable/fifa_cup"
+        android:contentDescription="TODO" />
+
+    <EditText
+        android:id="@+id/editText"
+        style="@style/Widget.AppCompat.AutoCompleteTextView"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:background="#11000000"
+        android:drawableLeft="@drawable/ic_action_user"
+        android:ems="10"
+        android:hint="Usuario"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:textColor="@android:color/background_light" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="208dp"
+        android:background="#11000000"
+        android:drawableLeft="@drawable/ic_action_pass"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textColor="@android:color/background_light" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="121dp"
+        app:cardBackgroundColor="@color/colorAccent"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="10dp" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:text="Login"
+                android:textColor="@color/cardview_light_background"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="58dp"
+        android:text="Registrar aqui."
+        android:textSize="18sp" />
+</RelativeLayout>
