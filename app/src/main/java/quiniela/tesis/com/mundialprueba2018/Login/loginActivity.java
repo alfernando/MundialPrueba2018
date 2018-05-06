@@ -50,7 +50,7 @@ public class loginActivity extends Activity implements View.OnClickListener{
             usuario = txt_usuario.getText().toString();
             password = txt_password.getText().toString();
 
-            fila = db.rawQuery("select usuario,password from usuario where usuario = '" + usuario + "' and password='" + password + "'", null);
+            fila = db.rawQuery("select usuario,password from usuario where usuario = '" + usuario + "' and password ='"+password+ "'", null);
 
 
         if (fila.moveToFirst()){
@@ -63,9 +63,10 @@ public class loginActivity extends Activity implements View.OnClickListener{
                 txt_password.setText("");
                 finish();
             }
-            else{
-                Toast.makeText(getApplicationContext(),"Usuario Incorrecto",Toast.LENGTH_LONG).show();
-            }
+
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"Usuario Incorrecto",Toast.LENGTH_LONG).show();
         }
 
     }
