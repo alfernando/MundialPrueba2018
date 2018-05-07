@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import quiniela.tesis.com.mundialprueba2018.MainActivity;
@@ -19,6 +20,7 @@ public class loginActivity extends Activity implements View.OnClickListener{
 
     EditText txt_usuario,txt_password;
     CardView btnLogin;
+    TextView txt_rigistro;
     private Cursor fila;
 
     @Override
@@ -31,6 +33,10 @@ public class loginActivity extends Activity implements View.OnClickListener{
 
         btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(this);
+
+        txt_rigistro = findViewById(R.id.textView2);
+        txt_rigistro.setOnClickListener(this);
+
     }
 
     @Override
@@ -38,10 +44,15 @@ public class loginActivity extends Activity implements View.OnClickListener{
         if (v.getId()==R.id.btnLogin){
             PL_Ingresar();
         }
+        if (v.getId()==R.id.textView2){
+            Intent intent = new Intent (this, registroActivity.class);
+            startActivity(intent);
+
+        }
     }
 
     public void PL_Ingresar(){
-        DBHelper admin = new DBHelper(this,"quiniela",null,1);
+        DBHelper admin = new DBHelper(this,"quiniela",null,2);
         String usuario;
         String password;
         SQLiteDatabase db = admin.getWritableDatabase();
@@ -62,6 +73,7 @@ public class loginActivity extends Activity implements View.OnClickListener{
                 txt_usuario.setText("");
                 txt_password.setText("");
                 finish();
+                
             }
 
         }

@@ -12,13 +12,15 @@ public class DBHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table usuario(codigo integer primary key autoincrement, usuario text, password text )");
-        db.execSQL("insert into usuario values(1,'admin','admin')");
+        db.execSQL("create table usuario( usuario text primary key , password text )");
+        db.execSQL("insert into usuario values('admin','admin')");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("create table usuario(codigo integer primary key autoincrement, usuario text, password text )");
-        db.execSQL("insert into usuario values(1,'admin','admin')");
+        db.execSQL("DROP TABLE IF EXISTS usuario");
+
+        //Creando las tablas de nuevo
+        onCreate(db);
     }
 }
