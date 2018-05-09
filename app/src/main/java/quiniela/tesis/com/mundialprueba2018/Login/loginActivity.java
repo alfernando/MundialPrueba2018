@@ -73,12 +73,15 @@ public class loginActivity extends Activity implements View.OnClickListener{
                 txt_usuario.setText("");
                 txt_password.setText("");
                 finish();
-                
+
             }
 
         }
         else{
             Toast.makeText(getApplicationContext(),"Usuario Incorrecto",Toast.LENGTH_LONG).show();
+            Intent intent = new Intent (this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
 
     }

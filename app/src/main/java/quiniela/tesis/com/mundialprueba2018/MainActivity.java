@@ -1,9 +1,16 @@
 package quiniela.tesis.com.mundialprueba2018;
 
-import android.database.Cursor;
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,12 +20,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import static android.widget.Toast.LENGTH_LONG;
+
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements LocationListener, NavigationView.OnNavigationItemSelectedListener {
 
+    private LocationManager locationManager;
+    private String TAG= "LocalizacionApp";
+    private TextView txt1,txt2;
+    private final int MY_PERMISSIONS_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +60,21 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        //inicia el codigo de GPS
+
+        txt1 = (TextView) findViewById(R.id.txtview1);
+        txt2 = (TextView) findViewById(R.id.txtview3);
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+           Log.d(TAG,"Faltan Permisos");
+           ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},MY_PERMISSIONS_REQUEST);
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
+
+
 
 
 
@@ -109,5 +138,44 @@ public class MainActivity extends AppCompatActivity
     private void setLogOff() {
 
         finish();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        txt1.setText("Latitud: "+location.getLatitude()+"");
+        txt2.setText("Longitud: "+location.getLongitude()+"");
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int recuestCode,String permissions[],int[] grantResult){
+        switch (recuestCode){
+            case MY_PERMISSIONS_REQUEST:{
+                if (grantResult.length > 0 && grantResult[0]==PackageManager.PERMISSION_GRANTED){
+                    Toast.makeText(this,"Perfecto", LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(this,"???",LENGTH_LONG).show();
+                }
+            }
+        }
     }
 }
