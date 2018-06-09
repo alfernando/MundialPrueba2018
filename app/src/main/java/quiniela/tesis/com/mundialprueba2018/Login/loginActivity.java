@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,8 +32,11 @@ import java.net.URL;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
 
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpConnection;
 import quiniela.tesis.com.mundialprueba2018.MainActivity;
 import quiniela.tesis.com.mundialprueba2018.R;
+import quiniela.tesis.com.mundialprueba2018.Utils.HttpUtils;
 
 public class loginActivity extends Activity implements View.OnClickListener{
 
@@ -104,6 +110,57 @@ public class loginActivity extends Activity implements View.OnClickListener{
     }
 
     public void PL_GetUsuario(){
+
+        try{
+            RequestParams rp = new RequestParams();
+
+            rp.add("usua", txt_usuario.getText().toString());
+            rp.add("pass", txt_password.getText().toString());
+
+            HttpUtils.get("Usuario.php", rp, new JsonHttpResponseHandler() {
+                // ACA!!! ESTOS MÉTODOS
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    // If the response is JSONObject instead of expected JSONArray
+                    Log.d("asd", "---------------- this is response : " + response);
+                    try {
+                        String vrlReponse = response.toString();
+                        JSONObject serverResp = new JSONObject(response.toString());
+                        Toast.makeText(getApplicationContext(),vrlReponse.toString(),Toast.LENGTH_LONG).show();
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+                    // Pull out the first event on the public timeline
+                    int temp = statusCode;
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void PL_GetUsuario2(){
         String sql = "https://rusiaquiniela2018.000webhostapp.com/Usuario.php";
 
         StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -118,6 +175,7 @@ public class loginActivity extends Activity implements View.OnClickListener{
             conn = (HttpURLConnection) url.openConnection();
 
             conn.setRequestMethod("GET");
+
             conn.connect();
 
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -144,6 +202,8 @@ public class loginActivity extends Activity implements View.OnClickListener{
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (Exception e){
             e.printStackTrace();
         }
 
