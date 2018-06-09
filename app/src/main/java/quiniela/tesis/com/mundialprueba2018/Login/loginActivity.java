@@ -73,7 +73,76 @@ public class loginActivity extends Activity implements View.OnClickListener{
         }
     }
 
-    public void PL_Ingresar(){
+    public void PL_Ingresar()
+    {
+
+        PL_GetUsuario();
+
+    }
+
+
+    public void PL_GetUsuario(){
+
+        try{
+            RequestParams rp = new RequestParams();
+
+            rp.add("usua", txt_usuario.getText().toString());
+            rp.add("pass", txt_password.getText().toString());
+
+            HttpUtils.get("Usuario.php", rp, new JsonHttpResponseHandler() {
+                // ACA!!! ESTOS MÉTODOS
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    // If the response is JSONObject instead of expected JSONArray
+                    Log.d("asd", "---------------- this is response : " + response);
+                    try {
+                        String vrlReponse = response.toString();
+                        JSONObject serverResp = new JSONObject(response.toString());
+                        Toast.makeText(getApplicationContext(),vrlReponse.toString(),Toast.LENGTH_LONG).show();
+                        PL_IngresarSistema();
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+                    // Pull out the first event on the public timeline
+                    int temp = statusCode;
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    super.onFailure(statusCode, headers, responseString, throwable);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    super.onFailure(statusCode, headers, throwable, errorResponse);
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void PL_IngresarSistema()
+    {
+        Intent intent = new Intent (this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
+    public void PL_Ingresar2(){
         DBHelper admin = new DBHelper(this,"quiniela",null,2);
         String usuario;
         String password;
@@ -109,106 +178,9 @@ public class loginActivity extends Activity implements View.OnClickListener{
 
     }
 
-    public void PL_GetUsuario(){
-
-        try{
-            RequestParams rp = new RequestParams();
-
-            rp.add("usua", txt_usuario.getText().toString());
-            rp.add("pass", txt_password.getText().toString());
-
-            HttpUtils.get("Usuario.php", rp, new JsonHttpResponseHandler() {
-                // ACA!!! ESTOS MÉTODOS
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    // If the response is JSONObject instead of expected JSONArray
-                    Log.d("asd", "---------------- this is response : " + response);
-                    try {
-                        String vrlReponse = response.toString();
-                        JSONObject serverResp = new JSONObject(response.toString());
-                        Toast.makeText(getApplicationContext(),vrlReponse.toString(),Toast.LENGTH_LONG).show();
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
-                    // Pull out the first event on the public timeline
-                    int temp = statusCode;
-
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    super.onFailure(statusCode, headers, responseString, throwable);
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                    super.onFailure(statusCode, headers, throwable, errorResponse);
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    super.onFailure(statusCode, headers, throwable, errorResponse);
-                }
-            });
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public void PL_GetUsuario2(){
-        String sql = "https://rusiaquiniela2018.000webhostapp.com/Usuario.php";
-
-        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-        SSLServerSocketFactory.getDefault();
-
-        URL url = null;
-        HttpURLConnection conn;
-
-        try {
-            url = new URL(sql);
-            conn = (HttpURLConnection) url.openConnection();
-
-            conn.setRequestMethod("GET");
-
-            conn.connect();
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            String json ="";
-
-            while ((inputLine = in.readLine()) != null){
-                    response.append(inputLine);
-            }
-
-            json = response.toString();
-            JSONArray jsonArr = null;
-            jsonArr = new JSONArray(json);
-
-            for (int i = 0 ; i < jsonArr.length() ; i++){
-                JSONObject jsonObject = jsonArr.getJSONObject(i);
-                Log.d("SALIDA",jsonObject.optString("us_usuario"));
-            }
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
 
 
-    }
+
 
 
 }
