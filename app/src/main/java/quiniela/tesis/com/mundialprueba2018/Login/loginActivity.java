@@ -94,12 +94,23 @@ public class loginActivity extends Activity implements View.OnClickListener{
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     // If the response is JSONObject instead of expected JSONArray
-                    Log.d("asd", "---------------- this is response : " + response);
                     try {
                         String vrlReponse = response.toString();
                         JSONObject serverResp = new JSONObject(response.toString());
-                        Toast.makeText(getApplicationContext(),vrlReponse.toString(),Toast.LENGTH_LONG).show();
-                        PL_IngresarSistema();
+                        //Toast.makeText(getApplicationContext(),vrlReponse.toString(),Toast.LENGTH_LONG).show();
+                        JSONArray jsonArray = serverResp.getJSONArray("listaUsuario");
+                        for (int i = 0 ; i<jsonArray.length();i++)
+                        {
+                            JSONObject json_data = jsonArray.getJSONObject(i);
+
+                            String usua = json_data.getString("us_usuario");
+                            if (usua.equals(txt_usuario.getText().toString()))
+                            {
+                                PL_IngresarSistema();
+                            }
+                        }
+
+
                     } catch (JSONException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();

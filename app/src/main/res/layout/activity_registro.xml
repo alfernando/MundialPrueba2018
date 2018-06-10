@@ -11,11 +11,27 @@
         android:id="@+id/imageView2"
         android:layout_width="181dp"
         android:layout_height="137dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/editText3"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="84dp"
-        android:src="@drawable/fifa_cup"
-        android:contentDescription="TODO" />
+        android:contentDescription="TODO"
+        android:src="@drawable/fifa_cup" />
+
+    <EditText
+        android:id="@+id/editText3"
+        style="@style/Widget.AppCompat.AutoCompleteTextView"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/editText"
+        android:layout_centerHorizontal="true"
+        android:background="#11000000"
+        android:drawableLeft="@drawable/ic_action_user"
+        android:ems="10"
+        android:hint="Telefono"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:text=""
+        android:textColor="@android:color/background_light" />
 
     <EditText
         android:id="@+id/editText"
@@ -37,15 +53,14 @@
         android:id="@+id/editText2"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/editText"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="208dp"
         android:background="#11000000"
         android:drawableLeft="@drawable/ic_action_pass"
         android:ems="10"
         android:hint="Password"
-        android:text=""
         android:inputType="textPassword"
+        android:text=""
         android:textColor="@android:color/background_light" />
 
     <android.support.v7.widget.CardView
