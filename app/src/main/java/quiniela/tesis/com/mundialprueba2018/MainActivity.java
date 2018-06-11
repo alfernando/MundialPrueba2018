@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -20,8 +23,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -33,6 +39,11 @@ public class MainActivity extends AppCompatActivity
     private String TAG= "LocalizacionApp";
     private TextView txt1,txt2;
     private final int MY_PERMISSIONS_REQUEST = 1;
+
+    ArrayList<PartidoVo> listDatos;
+    RecyclerView recycler;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Almacenar Resultados", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -75,7 +86,59 @@ public class MainActivity extends AppCompatActivity
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, this);
 
 
+        recycler = (RecyclerView) findViewById(R.id.recyclerView);
+        recycler.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
+
+
+        listDatos = new ArrayList<>();
+        recycler = (RecyclerView) findViewById(R.id.recyclerView);
+        recycler.setLayoutManager(new LinearLayoutManager(this));
+
+        llenarPartidos();
+
+        AdapterDatos adapter = new AdapterDatos(listDatos);
+        recycler.setAdapter(adapter);
+
+       // for (int i=0;i<=50;i++)
+        //{
+         //   listDatos.add("Dato: "+i+" ");
+        //}
+        //AdapterDatos adapter = new AdapterDatos(listDatos);
+        //recycler.setAdapter(adapter);
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+    private void llenarPartidos(){
+        String nombre ="rusia";
+        int image1 = 1;
+
+
+        switch (nombre){
+                        case "rusia":image1= R.drawable.lobo_rusia; break;
+                        default: image1=R.drawable.fifa_cup; break;
+                    }
+
+        listDatos.add(new PartidoVo(nombre,"Grupo A",image1) );
+        listDatos.add(new PartidoVo("Arabia Saudi","Grupo A",image1));
+        listDatos.add(new PartidoVo(nombre,"Grupo A",image1) );
+        listDatos.add(new PartidoVo("Arabia Saudi","Grupo A",image1));
+        listDatos.add(new PartidoVo(nombre,"Grupo A",image1) );
+        listDatos.add(new PartidoVo("Arabia Saudi","Grupo A",image1));
+        listDatos.add(new PartidoVo(nombre,"Grupo A",image1) );
+        listDatos.add(new PartidoVo("Arabia Saudi","Grupo A",image1));
+        listDatos.add(new PartidoVo(nombre,"Grupo A",image1) );
+        listDatos.add(new PartidoVo("Arabia Saudi","Grupo A",image1));
 
 
     }
